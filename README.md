@@ -40,7 +40,7 @@ python tools/build_html.py     # 改文案、條款快照、價格後
 python tools/subset_font.py    # build_html 之後，讓楷書子集跟上新字
 ```
 
-產品官網的條款或價格改版時，先更新 `tools/source/product_site/` 的快照（抓產品官網 `/`、`/terms`、`/privacy`、`/refund`、`/contact` 的 HTML 存成 `index.html`、`terms.html`、`privacy.html`、`refund.html`、`contact.html`），再重跑 `build_html.py`。
+產品官網的條款或價格改版時，先更新 `tools/source/product_site/` 的快照（抓 `https://web-production-36fe7bad.up.railway.app/site-src/`、`/site-src/terms`、`/site-src/privacy`、`/site-src/refund`、`/site-src/contact` 的 HTML 存成 `index.html`、`terms.html`、`privacy.html`、`refund.html`、`contact.html`），再重跑 `build_html.py`。產品端舊的 `/`、`/terms` 等路徑已 301 轉到本站，不要再抓（會抓回本站自己的頁面）；來源頁的站內連結是本站完整網址，產生器會換回相對路徑。
 
 站台在子路徑 `/temple/` 底下：頁內連結與資源一律用相對路徑（`href="terms.html"`），不要用 `/` 開頭；canonical、og:url、結構化資料與 sitemap 寫完整網址 `https://triplehai.com/temple/…`。
 
@@ -58,7 +58,7 @@ python tools/subset_font.py    # build_html 之後，讓楷書子集跟上新字
 - 事件 `line_click`：點到加好友連結（`a[href*="line.me"]`、`a[href*="lin.ee"]`）時送出，參數：
   - `link_url`：連結網址
   - `page_path`：所在頁面路徑（`location.pathname`）
-  - `cta_position`：按鈕位置，取最近的 `data-cta`；沒有就用所在區塊的 id；再沒有就是 `other`。目前的值：`hero`（首屏）、`start`（首頁怎麼開始）、`closing`（各頁結尾）、`header`（頁首，桌機）、`dock`（手機底部常駐）、`band`（功能頁中段）。條款與客服頁內文裡的加好友連結沒有標記，會記成 `other`。
+  - `cta_position`：按鈕位置，取最近的 `data-cta`；沒有就用所在區塊的 id；再沒有就是 `other`。目前的值：`hero`（首屏）、`start`（首頁怎麼開始）、`closing`（各頁結尾）、`header`（頁首，桌機）、`dock`（手機底部常駐）、`band`（功能頁中段）、`contact`（商家資訊與客服頁內文）。
 - 隱私權政策第四節（官網統計）已寫明使用 GA4，文字照產品官網。
 
 ## 關鍵字與對應頁面

@@ -420,7 +420,7 @@ write("features.html", features)
 src_index = (LIVE / "index.html").read_text(encoding="utf-8")
 prices_block = re.search(r'<div class="prices">.*?\n  </div>', src_index, re.S).group(0)
 prices_block = re.sub(r"<h3>(.*?)</h3>", r'<h3>\1<span class="soon">尚未開放</span></h3>', prices_block)
-brief_block = re.search(r'<dl class="terms-brief">.*?</dl>', src_index, re.S).group(0).replace('href="/refund"', 'href="refunds.html"')
+brief_block = re.search(r'<dl class="terms-brief">.*?</dl>', src_index, re.S).group(0).replace('href="/refund"', 'href="refunds.html"').replace(f'href="{BASE}refunds.html"', 'href="refunds.html"')
 for old, new in [("<dd>在 LINE 裡進廟後選購，", "<dd>開放後，在 LINE 裡進廟選購，"),
                  ("<dd>付款確認後立刻反映在廟裡。", "<dd>開放後，付款確認即反映在廟裡。"),
                  ("<dd>付款完成後開立電子發票，", "<dd>開放後，每筆付款完成即開立電子發票，")]:
@@ -480,7 +480,10 @@ write("faq.html", faq)
 # ---------------------------------------------------------------- 條款類四頁：內文取自線上版，只改連結；內文之外加站方公告
 SITE_NOTICE = ('\n  <p class="site-notice" role="note"><span class="seal sm" aria-hidden="true">告</span>'
                '<span><strong>公告：</strong>付款功能尚未開放，以下付款與退款相關內容自開放日起適用。</span></p>')
-LINKS = {"/terms": "terms.html", "/privacy": "privacy.html", "/refund": "refunds.html", "/contact": "contact.html", "/": "./"}
+# 來源頁的站內連結：新版（/site-src/）已是本站完整網址，舊版是根目錄路徑；一律換成相對路徑
+LINKS = {"/terms": "terms.html", "/privacy": "privacy.html", "/refund": "refunds.html", "/contact": "contact.html", "/": "./",
+         BASE + "terms.html": "terms.html", BASE + "privacy.html": "privacy.html", BASE + "refunds.html": "refunds.html",
+         BASE + "contact.html": "contact.html", BASE: "./"}
 doc_dates = {}
 for live_name, out, crumb, with_notice in [("terms", "terms.html", "服務條款", True), ("privacy", "privacy.html", "隱私權政策", False),
                                            ("refund", "refunds.html", "退款辦法", True), ("contact", "contact.html", "商家資訊與客服", False)]:
@@ -492,6 +495,8 @@ for live_name, out, crumb, with_notice in [("terms", "terms.html", "服務條款
     for old, new in LINKS.items():
         article = article.replace(f'href="{old}"', f'href="{new}"')
     assert OLD not in article
+    # 內文裡的加好友連結也標上位置，line_click 才分得出來
+    article = re.sub(r'(<a href="https://line\.me/[^"]*")', lambda m: m.group(1) + f' data-cta="{out[:-5]}"', article)
     doc_dates[out] = re.search(r"最後更新：(\d{4}-\d{2}-\d{2})", article).group(1)
     if with_notice:
         article, n = re.subn(r'(<p class="doc-date">.*?</p>)', r"\1" + SITE_NOTICE.replace("\\", r"\\"), article, count=1)
