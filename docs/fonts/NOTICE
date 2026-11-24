@@ -1,0 +1,18 @@
+字型著作權聲明與來源（M33）
+
+penglai-kai-base.ttf（字型名稱 Penglai Kai／蓬萊楷）是「全字庫正楷體」TW-Kai-98_1.ttf
+（數位發展部，Version 11508.01）的字集子集，並改名。原字型的著作權聲明（name 表 ID 0，原文照錄）：
+
+(c)2026 Ministry of Digital Affairs. You can use any of the following terms as needed.
+1. Open Government Data License, version 1.0(https://data.gov.tw/en/license).
+2. the SIL Open Font License, version 1.1. (https://scripts.sil.org/OFL)
+
+(c)2026數位發展部。使用者可依需求擇一使用以下條款：1.「政府資料開放授權條款-第一版」(https://data.gov.tw/license)；
+2.「開源字型授權1.1版(OFL 1.1)」(https://scripts.sil.org/OFL)
+
+本專案採 SIL Open Font License 1.1，授權全文見同資料夾 OFL.txt。
+- 修改內容：只保留 Big5 常用字區（5,401 字）、專案文案用字、ASCII 與中文標點；去掉 hinting；改名。
+- 原字型 name 表沒有宣告 Reserved Font Name；為免與原版混淆仍改名，不使用「全字庫正楷體」「TW-Kai」作為本字型名稱。
+- 原檔下載自全字庫開放資料（Fonts_Kai.zip），不放進 repo（art/fonts_src/ 已列入 .gitignore）；
+  重新產生：uv run python scripts/build_kai_font.py <TW-Kai-98_1.ttf 的路徑>。
+- 本字型不得單獨販售；隨網頁散布時須附本檔與 OFL.txt。
