@@ -199,8 +199,9 @@ Q_FREE = ("要錢嗎？要下載 App 嗎？", '不用下載，在 LINE 裡點開
 Q_PRIVACY = ("我跟廟公說的話，會被誰看到？", '你跟廟公說的話加密保存，用來回覆你、讓他下次接得上話。產生回覆時，內容會交給 AI 模型供應商處理，但不包含你的 LINE 識別碼、姓名或付款資料；我們不會出售你的資料，也不會拿去做本服務以外的行銷。廟公只在你傳訊息時回覆，不會主動傳訊息給你。想刪掉的時候，在聊天室輸入「刪除我的資料」，照提示確認後就會清掉。完整說明見<a href="privacy.html">隱私權政策</a>。')
 Q_PAYNOW = ("現在可以付費嗎？", '還不行。付款功能尚未開放，目前廟裡的事都不用錢：進廟、上香、擲筊、求籤、每天燒一次金紙，以及每天幾次跟廟公說話。開放時會在本網站公告，品項與價格見<a href="plans.html">收費方式</a>。')
 Q_LUCK = ("付了錢，擲筊或求籤會比較順嗎？", "不會。每一次擲筊、每一支籤，都是你當下親手擲出來、搖出來的，沒有人能事先安排，也不會因為有沒有付費、付多少而不同。付費項目只影響廟的樣子、芳名錄、可以跟廟公多聊幾次，以及燈牆上的一盞燈。")
-Q_MONEY = ("付的錢用在哪裡？", "付款開放後，款項是購買本公司線上服務的費用，由本公司開立電子發票，不會轉交任何宗教團體，也不能用來抵稅。")
-Q_REFUND = ("可以退款嗎？", '付款開放後，線上服務在付款後立即提供，原則上不受理無理由退款。重複扣款、付款成功卻沒有收到服務等情形，請來信，我們查明後處理。完整說明見<a href="refunds.html">退款辦法</a>。')
+Q_MONEY = ("付的錢用在哪裡？", "付款開放後，款項是購買本公司線上服務的費用，由本公司在付款完成後（ATM 轉帳、超商代碼於藍新確認入帳後）開立電子發票，不會轉交任何宗教團體，也不能用來抵稅。")
+Q_REFUND = ("可以退款嗎？", '付款開放後，線上服務在付款後立即提供，原則上不受理無理由退款。重複扣款、付款成功卻沒有收到服務等情形，請來信，我們查明後處理。僅信用卡付款可依退款辦法退款；WebATM、ATM 轉帳、超商代碼等非信用卡付款恕不退款，如遇系統問題以補發或展延處理，必要時由客服個別處理。完整說明見<a href="refunds.html">退款辦法</a>。')
+Q_NOCARD = ("沒有信用卡也能買嗎？", "付款開放後可以。在藍新金流的付款頁可以選 WebATM、ATM 轉帳，100 元以上的訂單也可以選超商代碼（實際以付款頁顯示為準）。選 ATM 轉帳、超商代碼時，會拿到一組繳費帳號或代碼，請在期限內繳費；藍新確認入帳後就會自動完成，回到廟裡就看得到。逾期未繳，那筆訂單會自動失效，不會扣款。這些非信用卡付款恕不退款。")
 Q_LAMP = ("光明燈的金額為什麼可以自己填？付多一點有差嗎？", "光明燈是一項線上服務：在廟裡側殿的燈牆上，為一個名字點一盞燈，從付款當天起亮 365 天。價金由你自己決定，最低 100 元。不管付多少，燈亮的時間、燈位和燈的樣子都一樣；金額會像其他付費項目一樣，計入那間廟的成長點數，並在芳名錄記上一筆（芳名錄依金額由高到低排列；沒有選擇留名就顯示為匿名）。這不是對任何宗教團體的捐助，款項不轉交任何宗教團體，也不能用來抵稅。點燈目前尚未開放。")
 Q_DEITY = ("可以換主神嗎？", "第一次進廟先選一位，之後隨時可以換。每一尊主神都有一間人人可拜的公廟，正殿的樣子各不相同。")
 Q_NAME = ("廟名會用到真實宮廟的名字嗎？", "廟名一律不使用真實宮廟的名稱。")
@@ -422,8 +423,9 @@ prices_block = re.search(r'<div class="prices">.*?\n  </div>', src_index, re.S).
 prices_block = re.sub(r"<h3>(.*?)</h3>", r'<h3>\1<span class="soon">尚未開放</span></h3>', prices_block)
 brief_block = re.search(r'<dl class="terms-brief">.*?</dl>', src_index, re.S).group(0).replace('href="/refund"', 'href="refunds.html"').replace(f'href="{BASE}refunds.html"', 'href="refunds.html"')
 for old, new in [("<dd>在 LINE 裡進廟後選購，", "<dd>開放後，在 LINE 裡進廟選購，"),
-                 ("<dd>付款確認後立刻反映在廟裡。", "<dd>開放後，付款確認即反映在廟裡。"),
-                 ("<dd>付款完成後開立電子發票，", "<dd>開放後，每筆付款完成即開立電子發票，")]:
+                 ("<dd>付款確認後立刻反映在廟裡（", "<dd>開放後，付款確認即反映在廟裡（"),
+                 ("<dd>付款完成後開立電子發票，", "<dd>開放後，每筆付款完成（ATM 轉帳、超商代碼於藍新確認入帳後）即開立電子發票，"),
+                 ("<dd>僅信用卡付款可依退款辦法退款；", "<dd>開放後，僅信用卡付款可依退款辦法退款；")]:
     assert old in brief_block, old
     brief_block = brief_block.replace(old, new)
 PLANS_TITLE = "收費方式｜線上拜拜免費進廟、付費項目價格｜蓬萊仙闕"
@@ -452,7 +454,7 @@ write("plans.html", plans)
 FAQ_TITLE = "常見問題｜線上求籤、擲筊準嗎？廟公是誰？｜蓬萊仙闕"
 FAQ_DESC = "蓬萊仙闕常見問題：是不是真的廟、廟公是不是真人、現在要不要錢、付費會不會讓擲筊求籤比較順、光明燈怎麼算、說的話誰看得到、資料怎麼刪除。"
 GROUPS = [("about", "關於這座廟", [Q_REAL, Q_NAME, Q_DEITY, Q_KEEPER]),
-          ("pay", "擲筊、求籤與收費", [Q_PAYNOW, Q_FREE, Q_LUCK, Q_MONEY, Q_LAMP, Q_REFUND]),
+          ("pay", "擲筊、求籤與收費", [Q_PAYNOW, Q_FREE, Q_LUCK, Q_MONEY, Q_LAMP, Q_REFUND, Q_NOCARD]),
           ("data", "資料與安全", [Q_PRIVACY, Q_URGENT])]
 all_faq = [q for _, _, qs in GROUPS for q in qs]
 faq_ld = ld({"@context": "https://schema.org", "@type": "FAQPage", "inLanguage": "zh-Hant-TW",
@@ -520,7 +522,7 @@ p404 = head(path="404.html", title="找不到頁面｜蓬萊仙闕", desc="這�
 write("404.html", p404)
 
 # ---------------------------------------------------------------- sitemap（條款頁的 lastmod 跟著頁面上的「最後更新」）
-pages = [("", SITE_DATE), ("features.html", SITE_DATE), ("plans.html", SITE_DATE), ("faq.html", SITE_DATE)] + \
+pages = [("", SITE_DATE), ("features.html", SITE_DATE), ("plans.html", "2026-11-25"), ("faq.html", "2026-11-25")] + \
         [(p, doc_dates[p]) for p in ["terms.html", "privacy.html", "refunds.html", "contact.html"]]
 (DOCS / "sitemap.xml").write_text(
     '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'
