@@ -1,8 +1,8 @@
 """產生 docs/ 的 HTML、sitemap.xml（共用頁首頁尾）。
 
 用法（在 repo 根目錄）：python tools/build_html.py
-條款類四頁的內文與收費頁的價目，取自產品官網的快照 tools/source/product_site/*.html（文字不改）；
-只在內文之外（標題日期下方）加站方公告。site.css、字型、圖片不由本程式產生。"""
+條款類四頁的內文與收費頁的價目，取自產品官網的快照 tools/source/product_site/*.html（文字不改）。
+site.css、字型、圖片不由本程式產生。"""
 import json
 import re
 from pathlib import Path
@@ -14,7 +14,7 @@ BASE = "https://triplehai.com/temple/"
 OLD = "https://web-production-36fe7bad.up.railway.app"
 LINE = "https://line.me/R/ti/p/%40564szswh"
 OG = BASE + "og-image.jpg"
-SITE_DATE = "2026-11-24"
+SITE_DATE = "2026-11-25"
 
 # 楷書：自架 Penglai Kai（全字庫正楷體的子集，OFL 1.1）。tools/subset_font.py 依頁面用字切成三份：
 # kai-hero（首屏用字，預載）、kai-home（首頁其他用字）、kai-site（分頁標題等用字），以 unicode-range 按需下載。
@@ -195,14 +195,14 @@ def page_head(seal, kicker, h1, lead, extra=""):
 # ---------------------------------------------------------------- 共用問答（答案取自線上版官網、服務條款與隱私權政策的原意）
 Q_REAL = ("這是真的廟嗎？", "不是。蓬萊仙闕是一項線上服務，沒有實體廟宇，也與任何真實宮廟或宗教團體無關。廟裡的場景是製作的圖像，廟公由 AI 扮演。")
 Q_KEEPER = ("廟公是真人嗎？他會記得我嗎？", "不是真人，廟公由 AI 扮演。他記得你最近幾天說過的事和求過的籤，隔幾天再來可以接著聊；隔太久的事可能要再跟他說一次。他陪你把事情想清楚、替你講解籤詩，但不代神明發言，也不替任何結果打包票；醫療、投資、法律與人身安全的事，還是要找合格的專業人士。")
-Q_FREE = ("要錢嗎？要下載 App 嗎？", '不用下載，在 LINE 裡點開就是廟埕。進廟、上香、擲筊、求籤都不用錢，問廟公每天有免費次數。付費項目尚未開放，現在全部免費用。詳見<a href="plans.html">收費方式</a>。')
+Q_FREE = ("要錢嗎？要下載 App 嗎？", '不用下載，在 LINE 裡點開就是廟埕。進廟、上香、擲筊、求籤都不用錢，問廟公每天有免費次數。蓋廟費、線香、金紙、問事費與光明燈是付費項目，詳見<a href="plans.html">收費方式</a>。')
 Q_PRIVACY = ("我跟廟公說的話，會被誰看到？", '你跟廟公說的話加密保存，用來回覆你、讓他下次接得上話。產生回覆時，內容會交給 AI 模型供應商處理，但不包含你的 LINE 識別碼、姓名或付款資料；我們不會出售你的資料，也不會拿去做本服務以外的行銷。廟公只在你傳訊息時回覆，不會主動傳訊息給你。想刪掉的時候，在聊天室輸入「刪除我的資料」，照提示確認後就會清掉。完整說明見<a href="privacy.html">隱私權政策</a>。')
-Q_PAYNOW = ("現在可以付費嗎？", '還不行。付款功能尚未開放，目前廟裡的事都不用錢：進廟、上香、擲筊、求籤、每天燒一次金紙，以及每天幾次跟廟公說話。開放時會在本網站公告，品項與價格見<a href="plans.html">收費方式</a>。')
+Q_PAYNOW = ("現在可以付費嗎？", '可以。付費項目在 LINE 裡進廟後選購，透過藍新金流付款，可用信用卡一次付清、WebATM、ATM 轉帳、超商代碼（實際以藍新付款頁顯示為準）。進廟、上香、擲筊、求籤、每天燒一次金紙，以及每天幾次跟廟公說話，仍然不用錢。品項與價格見<a href="plans.html">收費方式</a>。')
 Q_LUCK = ("付了錢，擲筊或求籤會比較順嗎？", "不會。每一次擲筊、每一支籤，都是你當下親手擲出來、搖出來的，沒有人能事先安排，也不會因為有沒有付費、付多少而不同。付費項目只影響廟的樣子、芳名錄、可以跟廟公多聊幾次，以及燈牆上的一盞燈。")
-Q_MONEY = ("付的錢用在哪裡？", "付款開放後，款項是購買本公司線上服務的費用，由本公司在付款完成後（ATM 轉帳、超商代碼於藍新確認入帳後）開立電子發票，不會轉交任何宗教團體，也不能用來抵稅。")
-Q_REFUND = ("可以退款嗎？", '付款開放後，線上服務在付款後立即提供，原則上不受理無理由退款。重複扣款、付款成功卻沒有收到服務等情形，請來信，我們查明後處理。僅信用卡付款可依退款辦法退款；WebATM、ATM 轉帳、超商代碼等非信用卡付款恕不退款，如遇系統問題以補發或展延處理，必要時由客服個別處理。完整說明見<a href="refunds.html">退款辦法</a>。')
-Q_NOCARD = ("沒有信用卡也能買嗎？", "付款開放後可以。在藍新金流的付款頁可以選 WebATM、ATM 轉帳，100 元以上的訂單也可以選超商代碼（實際以付款頁顯示為準）。選 ATM 轉帳、超商代碼時，會拿到一組繳費帳號或代碼，請在期限內繳費；藍新確認入帳後就會自動完成，回到廟裡就看得到。逾期未繳，那筆訂單會自動失效，不會扣款。這些非信用卡付款恕不退款。")
-Q_LAMP = ("光明燈的金額為什麼可以自己填？付多一點有差嗎？", "光明燈是一項線上服務：在廟裡側殿的燈牆上，為一個名字點一盞燈，從付款當天起亮 365 天。價金由你自己決定，最低 100 元。不管付多少，燈亮的時間、燈位和燈的樣子都一樣；金額會像其他付費項目一樣，計入那間廟的成長點數，並在芳名錄記上一筆（芳名錄依金額由高到低排列；沒有選擇留名就顯示為匿名）。這不是對任何宗教團體的捐助，款項不轉交任何宗教團體，也不能用來抵稅。點燈目前尚未開放。")
+Q_MONEY = ("付的錢用在哪裡？", "款項是購買本公司線上服務的費用，由本公司在付款完成後（ATM 轉帳、超商代碼於藍新確認入帳後）開立電子發票，不會轉交任何宗教團體，也不能用來抵稅。")
+Q_REFUND = ("可以退款嗎？", '線上服務在付款後立即提供，原則上不受理無理由退款。重複扣款、付款成功卻沒有收到服務等情形，請來信，我們查明後處理。僅信用卡付款可依退款辦法退款；WebATM、ATM 轉帳、超商代碼等非信用卡付款恕不退款，如遇系統問題以補發或展延處理，必要時由客服個別處理。完整說明見<a href="refunds.html">退款辦法</a>。')
+Q_NOCARD = ("沒有信用卡也能買嗎？", "可以。在藍新金流的付款頁可以選 WebATM、ATM 轉帳，100 元以上的訂單也可以選超商代碼（實際以付款頁顯示為準）。選 ATM 轉帳、超商代碼時，會拿到一組繳費帳號或代碼，請在期限內繳費；藍新確認入帳後就會自動完成，回到廟裡就看得到。逾期未繳，那筆訂單會自動失效，不會扣款。這些非信用卡付款恕不退款。")
+Q_LAMP = ("光明燈的金額為什麼可以自己填？付多一點有差嗎？", "光明燈是一項線上服務：在廟裡側殿的燈牆上，為一個名字點一盞燈，從付款當天起亮 365 天。價金由你自己決定，最低 100 元。不管付多少，燈亮的時間、燈位和燈的樣子都一樣；金額會像其他付費項目一樣，計入那間廟的成長點數，並在芳名錄記上一筆（芳名錄依金額由高到低排列；沒有選擇留名就顯示為匿名）。這不是對任何宗教團體的捐助，款項不轉交任何宗教團體，也不能用來抵稅。")
 Q_DEITY = ("可以換主神嗎？", "第一次進廟先選一位，之後隨時可以換。每一尊主神都有一間人人可拜的公廟，正殿的樣子各不相同。")
 Q_NAME = ("廟名會用到真實宮廟的名字嗎？", "廟名一律不使用真實宮廟的名稱。")
 Q_URGENT = ("遇到很急、很危險的事怎麼辦？", "本服務不提供醫療、投資、法律或其他專業意見。遇到這類問題，請找合格的專業人士；遇到危急情況，請立即撥打 110、119，或撥打 1925 安心專線。")
@@ -218,7 +218,7 @@ def strip_tags(s):
 
 # ---------------------------------------------------------------- 首頁（水墨：首屏 → 三幅掛軸 → 有些時候 → 怎麼開始 → 必要的疑問 → 結尾）
 INDEX_TITLE = "蓬萊仙闕｜線上拜拜、祈福、求籤的 LINE 線上廟宇"
-INDEX_DESC = "心裡有事的時候，打開 LINE 進廟：上一炷香、為掛念的人祈福、擲筊求籤問個方向，再跟 AI 廟公慢慢說。線上的儀式體驗，現在免費，不用下載 App。"
+INDEX_DESC = "心裡有事的時候，打開 LINE 進廟：上一炷香、為掛念的人祈福、擲筊求籤問個方向，再跟 AI 廟公慢慢說。線上的儀式體驗，進廟免費，不用下載 App。"
 
 org = {
     "@context": "https://schema.org",
@@ -246,7 +246,7 @@ preload = (f'<link rel="preload" as="image" type="image/webp" image{HERO_M.repla
 HOME_FAQ = [
     ("這是真的廟嗎？", "不是。這是線上的儀式體驗，沒有實體廟宇，也與任何真實宮廟或宗教團體無關；廟裡的場景是繪製的圖像。"),
     ("廟公是真人嗎？", "不是，廟公由 AI 扮演。他陪你把事情想清楚、替你講解籤詩，但不代神明發言，也不替任何結果打包票。"),
-    ("要錢嗎？", "現在都不用錢：進廟、上香、擲筊、求籤，每天也有幾次可以跟廟公說話。付費項目尚未開放。"),
+    ("要錢嗎？", "進廟、上香、擲筊、求籤都不用錢，每天也有幾次可以跟廟公說話。蓋廟費、線香、金紙、問事費與光明燈是付費項目。"),
     ("我說的話，誰看得到？", "加密保存，只用來回覆你。回覆時內容會交給 AI 模型供應商處理，但不含你的 LINE 識別碼與姓名；不會出售，也不拿去做其他行銷。在聊天室輸入「刪除我的資料」就能清掉。"),
 ]
 
@@ -261,7 +261,7 @@ index = head(path="", title=INDEX_TITLE, desc=INDEX_DESC, extra=preload, body_cl
       <p class="eyebrow">LINE 線上廟宇‧線上拜拜</p>
       <p class="lead">睡不著的夜裡、掛念一個人的時候、拿不定主意之前，打開 LINE 進廟，上一炷香，靜一靜。</p>
       {cta(' data-hero-cta', 'btn-hero', pos="hero")}
-      <p class="cta-note">線上儀式體驗‧廟公由 AI 扮演‧沒有實體廟宇<br>現在都不用錢，不用下載 App</p>
+      <p class="cta-note">線上儀式體驗‧廟公由 AI 扮演‧沒有實體廟宇<br>進廟不用錢，不用下載 App</p>
     </div>
   </div>
 </section>
@@ -274,7 +274,7 @@ index = head(path="", title=INDEX_TITLE, desc=INDEX_DESC, extra=preload, body_cl
       <article class="scroll"><h3>祈福</h3><p>在心裡默念一個名字，為掛念的人上一炷香、燒一份金紙。</p><span class="scroll-seal" aria-hidden="true">福</span></article>
       <article class="scroll"><h3>問方向</h3><p>拿不定主意時，擲個筊、求支籤，廟公陪你把事情想清楚。</p><span class="scroll-seal" aria-hidden="true">問</span></article>
     </div>
-    <p class="scrolls-note">也可以在燈牆為掛念的人點一盞燈（點燈為付費項目，尚未開放）。<br>擲筊、求籤的結果與有沒有付費無關；怎麼選，仍由你自己決定。</p>
+    <p class="scrolls-note">也可以在燈牆為掛念的人點一盞燈（點燈為付費項目）。<br>擲筊、求籤的結果與有沒有付費無關；怎麼選，仍由你自己決定。</p>
   </div>
 </section>
 
@@ -358,7 +358,7 @@ levels_html = "\n".join(
 free_band = f"""
 <aside class="band" aria-label="免費使用">
   <div class="wrap band-in">
-    <p><span class="seal sm" aria-hidden="true">免</span>上香、擲筊、求籤、跟廟公說話，現在都不用錢。</p>
+    <p><span class="seal sm" aria-hidden="true">免</span>上香、擲筊、求籤、跟廟公說話，都不用錢。</p>
     {cta(pos="band")}
   </div>
 </aside>"""
@@ -382,14 +382,14 @@ features = head(path="features.html", title=FEAT_TITLE, desc=FEAT_DESC, extra=cr
             "<p>搖一搖籤筒，取出一支六十甲子籤，再擲筊確認是不是這一支。</p>\n    <p>求到的籤，回到聊天室請廟公講解。籤詩的白話解說由 AI 產生，僅供參考。</p>",
             photo_phone("qian", "雙手捧著籤筒", "qian", "求籤畫面：供桌上的籤筒與一對筊，下方可寫想問的事")) \
   + feature("keeper", "問", "跟廟公說說話", "心裡的事，回到聊天室慢慢說",
-            "<p>回到聊天室直接打字。廟公陪你把事情想清楚，也替你講解求到的籤。</p>\n    <p>廟公由 AI 扮演。他記得你最近幾天說過的事和求過的籤，隔幾天再來可以接著聊；隔太久的事可能要再跟他說一次。他不代神明發言，也不替任何結果打包票。醫療、投資、法律與人身安全的事，還是要找合格的專業人士。</p>\n    <p class=\"fine\">問廟公每天有 3 次免費（以 LINE 內顯示為準）；加購問事次數的功能尚未開放。</p>",
+            "<p>回到聊天室直接打字。廟公陪你把事情想清楚，也替你講解求到的籤。</p>\n    <p>廟公由 AI 扮演。他記得你最近幾天說過的事和求過的籤，隔幾天再來可以接著聊；隔太久的事可能要再跟他說一次。他不代神明發言，也不替任何結果打包票。醫療、投資、法律與人身安全的事，還是要找合格的專業人士。</p>\n    <p class=\"fine\">問廟公每天有 3 次免費（以 LINE 內顯示為準）；也可以加購問事次數。</p>",
             f'<div class="photo">{scene("hall-guansheng", "關聖帝君的正殿，燭火明亮", PHOTO_SIZES)}</div>') \
   + free_band \
   + feature("gold", "金", "燒金紙", "在金爐前，把金紙一張一張送進去",
-            "<p>捧著金紙在金爐前拜三拜，再把金紙一張一張送進爐裡，看著火光把它化去。</p>\n    <p>每天可以免費燒一次。另外選購金紙的功能尚未開放。</p>",
+            "<p>捧著金紙在金爐前拜三拜，再把金紙一張一張送進爐裡，看著火光把它化去。</p>\n    <p>每天可以免費燒一次，也可以另外選購金紙。</p>",
             photo_phone("burn", "金爐爐口火光正旺，手邊一疊金紙", "burn", "金爐畫面：「心裡默念想祈求的事，拜三拜」")) \
-  + feature("lamp", "燈", '光明燈<span class="soon">點燈尚未開放</span>', "為掛念的人，點一盞燈",
-            "<p>在側殿的燈牆為一個名字點一盞燈，亮一年。燈牆現在就能進去看；點燈屬於付費項目，尚未開放。</p>\n    <p>開放後，價金由你自己決定，最低 100 元；不管付多少，燈亮的時間、燈位和燈的樣子都一樣。</p>\n    <p class=\"fine\">燈上的名字若是別人的，請先取得對方同意；燈牆上對其他人只顯示遮蔽後的名字。</p>",
+  + feature("lamp", "燈", "光明燈", "為掛念的人，點一盞燈",
+            "<p>在側殿的燈牆為一個名字點一盞燈，亮一年。燈牆不用錢就能進去看；點燈屬於付費項目。</p>\n    <p>價金由你自己決定，最低 100 元；不管付多少，燈亮的時間、燈位和燈的樣子都一樣。</p>\n    <p class=\"fine\">燈上的名字若是別人的，請先取得對方同意；燈牆上對其他人只顯示遮蔽後的名字。</p>",
             f'<div class="phone phone-solo">{img("screen-lamp", "光明燈畫面：側殿燈牆上一格格燈位，已點的燈寫著遮蔽後的名字（示範資料）", 440, 952)}</div>') \
   + feature("calendar", "曆", "參拜曆", "每一次參拜，都替你記著",
             "<p>參拜曆只記你自己的上香、擲筊、求籤與問事，一個月翻開來就看得到。</p>\n    <p>曆上也標出歲時節俗與神明聖誕，依民間常見的說法整理，各地廟宇的日子可能不同。</p>",
@@ -397,10 +397,9 @@ features = head(path="features.html", title=FEAT_TITLE, desc=FEAT_DESC, extra=cr
   + f"""
 <section class="feature wrap" id="build" aria-labelledby="build-t">
   <div>
-    <p class="kicker"><span class="seal sm" aria-hidden="true">蓋</span>蓋廟<span class="soon">尚未開放</span></p>
+    <p class="kicker"><span class="seal sm" aria-hidden="true">蓋</span>蓋廟</p>
     <h2 id="build-t">蓋一間自己的廟，從小祠蓋到金闕天宮</h2>
-    <p class="notice-inline">蓋自己的廟需要蓋廟費，付款功能尚未開放；目前可以每天到公廟上香，看公廟一級一級長大。</p>
-    <p>開放後，第一次蓋廟費滿 100 元，就能建造一間屬於你的廟，幫它取名字、在龍柱留名。之後每一筆蓋廟費、每一次上香，都讓它長大一點。公廟最高到第五級，再往上只有自己的廟才有。</p>
+    <p>第一次蓋廟費滿 100 元，就能建造一間屬於你的廟，幫它取名字、在龍柱留名。之後每一筆蓋廟費、每一次上香，都讓它長大一點。公廟最高到第五級，再往上只有自己的廟才有。</p>
     <p>廟越大，開的殿越多：同祀的神明、廟裡的浮雕與彩繪作品，會隨著等級一一安座。</p>
   </div>
   <div class="feature-media"><div class="phone">{img("screen-home", "廟埕俯瞰畫面：點圖上的紅籤走進正殿、三川殿、廟埕、護龍", 440, 952)}</div><div class="photo photo-wide">{img("level-5", "第五級：鐘鼓樓大廟", 640, 427)}</div></div>
@@ -412,38 +411,32 @@ features = head(path="features.html", title=FEAT_TITLE, desc=FEAT_DESC, extra=cr
   <p class="levels-note fine">蓋廟費 1 元算 1 點；每人每天上香一次算 20 點。點數只用來決定廟的樣子，不能兌換或轉讓。</p>
 </div>
 """ + closing('<span class="nw">心裡有事，</span><span class="nw">進廟坐坐。</span>',
-              body='<p class="honest">進廟、上香、擲筊、求籤都不用錢。付費項目尚未開放，預計的品項見<a href="plans.html">收費方式</a>。</p>') + """
+              body='<p class="honest">進廟、上香、擲筊、求籤都不用錢。付費項目與價格見<a href="plans.html">收費方式</a>。</p>') + """
 </main>
 """ + footer(dock=True)
 write("features.html", features)
 
-# ---------------------------------------------------------------- 收費頁（價格照線上版；付款尚未開放）
+# ---------------------------------------------------------------- 收費頁（價格照線上版）
 src_index = (LIVE / "index.html").read_text(encoding="utf-8")
 prices_block = re.search(r'<div class="prices">.*?\n  </div>', src_index, re.S).group(0)
-prices_block = re.sub(r"<h3>(.*?)</h3>", r'<h3>\1<span class="soon">尚未開放</span></h3>', prices_block)
 brief_block = re.search(r'<dl class="terms-brief">.*?</dl>', src_index, re.S).group(0).replace('href="/refund"', 'href="refunds.html"').replace(f'href="{BASE}refunds.html"', 'href="refunds.html"')
-for old, new in [("<dd>在 LINE 裡進廟後選購，", "<dd>開放後，在 LINE 裡進廟選購，"),
-                 ("<dd>付款確認後立刻反映在廟裡（", "<dd>開放後，付款確認即反映在廟裡（"),
-                 ("<dd>付款完成後開立電子發票，", "<dd>開放後，每筆付款完成（ATM 轉帳、超商代碼於藍新確認入帳後）即開立電子發票，"),
-                 ("<dd>僅信用卡付款可依退款辦法退款；", "<dd>開放後，僅信用卡付款可依退款辦法退款；")]:
+# 發票開立時點補上非信用卡付款的入帳條件（與商家資訊頁「發票」段一致）
+for old, new in [("<dd>付款完成後開立電子發票，", "<dd>付款完成後（ATM 轉帳、超商代碼於藍新確認入帳後）開立電子發票，")]:
     assert old in brief_block, old
     brief_block = brief_block.replace(old, new)
 PLANS_TITLE = "收費方式｜線上拜拜免費進廟、付費項目價格｜蓬萊仙闕"
-PLANS_DESC = "蓬萊仙闕進廟、上香、擲筊、求籤都不用錢。蓋廟費、線香、金紙、問事費與光明燈尚未開放付款，這裡先列出開放後的品項與價格；全部一次付款、不會自動續扣。"
-notice = """
-      <div class="notice" role="note"><span class="seal" aria-hidden="true">告</span><p><strong>付款功能尚未開放。</strong>現在進廟、上香、擲筊、求籤、每天燒一次金紙、跟廟公說話，都不用錢。下面是開放後預計的品項與價格，實際以開放時 LINE 內購買頁為準。</p></div>"""
+PLANS_DESC = "蓬萊仙闕進廟、上香、擲筊、求籤都不用錢。蓋廟費、線香、金紙、問事費與光明燈是付費項目，這裡列出品項與價格；全部一次付款、不會自動續扣。"
 plans = head(path="plans.html", title=PLANS_TITLE, desc=PLANS_DESC, extra=crumbs("plans.html", "收費方式")) + header("plans") + """
 <main id="main">""" + page_head("價", "收費", '<span class="nw">收費方式：</span><span class="nw">免費進廟，</span><span class="nw">付費項目一覽</span>',
-                                  "進廟、上香、擲筊、求籤都不用錢，問廟公每天有免費次數。付費項目目前尚未開放；下面先列出開放後的品項與價格，全部是一次付款，不會自動續扣。",
-                                  extra=notice) + f"""
+                                  "進廟、上香、擲筊、求籤都不用錢，問廟公每天有免費次數。下面是付費項目的品項與價格，全部是一次付款，不會自動續扣。") + f"""
 <section class="sec" aria-labelledby="prices-title">
   <div class="wrap">
-  <h2 id="prices-title" class="h-sub">付費項目與價格<small>開放後適用</small></h2>
+  <h2 id="prices-title" class="h-sub">付費項目與價格</h2>
   {prices_block}
-  <h2 class="h-sub">怎麼買、交付與退款<small>開放後適用</small></h2>
+  <h2 class="h-sub">怎麼買、交付與退款</h2>
   {brief_block}
-  <p class="fine plan-note">付費項目只影響廟的樣子、芳名錄、可以問的次數，以及燈牆上有沒有你點的燈，和擲筊、求籤的結果無關。價格以開放後 LINE 內購買頁顯示為準。</p>
-  <p class="fine">開放後，第一次蓋廟費滿 100 元，就能建造一間屬於你的廟。蓋廟費 1 元算 1 點；每人每天上香一次算 20 點。點數只用來決定廟的樣子，不能兌換或轉讓。等級說明見<a href="features.html#build">蓋自己的廟</a>。</p>
+  <p class="fine plan-note">付費項目只影響廟的樣子、芳名錄、可以問的次數，以及燈牆上有沒有你點的燈，和擲筊、求籤的結果無關。價格以 LINE 內購買頁顯示為準。</p>
+  <p class="fine">第一次蓋廟費滿 100 元，就能建造一間屬於你的廟。蓋廟費 1 元算 1 點；每人每天上香一次算 20 點。點數只用來決定廟的樣子，不能兌換或轉讓。等級說明見<a href="features.html#build">蓋自己的廟</a>。</p>
   </div>
 </section>""" + closing('<span class="nw">先進廟看看，</span><span class="nw">不用錢。</span>') + """
 </main>
@@ -479,16 +472,14 @@ faq = head(path="faq.html", title=FAQ_TITLE, desc=FAQ_DESC, extra=faq_ld + "\n" 
 """ + footer(dock=True)
 write("faq.html", faq)
 
-# ---------------------------------------------------------------- 條款類四頁：內文取自線上版，只改連結；內文之外加站方公告
-SITE_NOTICE = ('\n  <p class="site-notice" role="note"><span class="seal sm" aria-hidden="true">告</span>'
-               '<span><strong>公告：</strong>付款功能尚未開放，以下付款與退款相關內容自開放日起適用。</span></p>')
+# ---------------------------------------------------------------- 條款類四頁：內文取自線上版，只改連結
 # 來源頁的站內連結：新版（/site-src/）已是本站完整網址，舊版是根目錄路徑；一律換成相對路徑
 LINKS = {"/terms": "terms.html", "/privacy": "privacy.html", "/refund": "refunds.html", "/contact": "contact.html", "/": "./",
          BASE + "terms.html": "terms.html", BASE + "privacy.html": "privacy.html", BASE + "refunds.html": "refunds.html",
          BASE + "contact.html": "contact.html", BASE: "./"}
 doc_dates = {}
-for live_name, out, crumb, with_notice in [("terms", "terms.html", "服務條款", True), ("privacy", "privacy.html", "隱私權政策", False),
-                                           ("refund", "refunds.html", "退款辦法", True), ("contact", "contact.html", "商家資訊與客服", False)]:
+for live_name, out, crumb in [("terms", "terms.html", "服務條款"), ("privacy", "privacy.html", "隱私權政策"),
+                              ("refund", "refunds.html", "退款辦法"), ("contact", "contact.html", "商家資訊與客服")]:
     src = (LIVE / f"{live_name}.html").read_text(encoding="utf-8")
     title = re.search(r"<title>(.*?)</title>", src).group(1)
     desc = re.search(r'<meta name="description" content="([^"]*)">', src).group(1)
@@ -500,9 +491,6 @@ for live_name, out, crumb, with_notice in [("terms", "terms.html", "服務條款
     # 內文裡的加好友連結也標上位置，line_click 才分得出來
     article = re.sub(r'(<a href="https://line\.me/[^"]*")', lambda m: m.group(1) + f' data-cta="{out[:-5]}"', article)
     doc_dates[out] = re.search(r"最後更新：(\d{4}-\d{2}-\d{2})", article).group(1)
-    if with_notice:
-        article, n = re.subn(r'(<p class="doc-date">.*?</p>)', r"\1" + SITE_NOTICE.replace("\\", r"\\"), article, count=1)
-        assert n == 1
     page = head(path=out, title=title, desc=desc, og_type="article", extra=crumbs(out, crumb)) + header() + f'\n<main id="main">\n{article}\n</main>\n' + footer()
     write(out, page)
 

@@ -107,4 +107,4 @@ python -m http.server 8000 -d /tmp/preview
 3. 價格以產品的商品目錄為準；`plans.html` 的價目取自 `tools/source/product_site/index.html` 快照，改價時更新快照再重跑 `tools/build_html.py`。
 4. 重大變更（付費或退款規則）依服務條款第八條，生效前要先公告。
 5. `sitemap.xml` 的 `<lastmod>` 由 `tools/build_html.py` 產生：一般頁面用程式裡的 `SITE_DATE`（改了內容要一起改），條款類頁面自動取頁面上的「最後更新」日期。
-6. 付款開放時（改 `tools/build_html.py` 再重跑）：拿掉 `plans.html`、`features.html`、`faq.html`、首頁的「尚未開放」字樣與告示，以及條款類三頁（terms、refunds、contact）標題下方的站方公告。
+6. 付款已於 2026-11-25 開放：`plans.html`、`features.html`、`faq.html`、首頁的「尚未開放」字樣與告示，以及條款類頁面標題下方的站方公告都已拿掉（`site.css` 的 `.soon`、`.notice`、`.notice-inline`、`.site-notice` 樣式保留未用）。
